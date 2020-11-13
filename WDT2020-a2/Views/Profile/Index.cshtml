@@ -1,0 +1,57 @@
+﻿@model WDT2020_a2.Models.Customer
+
+@{
+    ViewData["Title"] = "Customer";
+}
+
+<div class="container content-card">
+    <div class="container content-title text-left">
+        <h1 class="display-4">@Model.CustomerName</h1>
+    </div>
+    <div class="container content-body">
+        <div class="container">
+
+            <p class="profile-title">@Html.DisplayNameFor(x => x.Address):</p>
+
+            <div class="profile-content">
+                <p>@Html.DisplayFor(x => x.Address)</p>
+                <p>@Html.DisplayFor(x => x.City)</p>
+                <p>@Html.DisplayFor(x => x.State)</p>
+                <p>@Html.DisplayFor(x => x.PostCode)</p>
+            </div>
+
+        </div>
+
+        <div class="container">
+
+            <p class="profile-title">@Html.DisplayNameFor(x => x.Phone):</p>
+
+            <div class="profile-content">
+                <p>@Html.DisplayFor(x => x.DisplayPhoneNumber)</p>
+            </div>
+
+        </div>
+
+        <div class="container">
+
+            <p class="profile-title">@Html.DisplayNameFor(x => x.TFN):</p>
+
+            <div class="profile-content">
+                @if (Model.TFN == null)
+                {<p>Empty</p> }
+                else
+                { <p>@Html.DisplayFor(x => x.TFN)</p>}
+            </div>
+            <a class="btn btn-primary" asp-action="Edit" asp-route-customerID="@Model.CustomerID">Edit</a>
+
+        </div>
+    </div>
+</div>
+<div class="container tag-base">
+    <a asp-controller="Home" asp-action="Index">Back to Home</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

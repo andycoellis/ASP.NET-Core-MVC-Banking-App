@@ -1,0 +1,59 @@
+﻿w@using WDT2020_a2.Models
+@model BillPay
+@{
+    ViewData["Title"] = "Create";
+
+    <h1>BillPay</h1>
+
+    <h4>New Payee</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-controller="BillPay" asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="BillPayID" />
+                <input type="hidden" asp-for="Account" />
+                <input type="hidden" asp-for="ModifyDate" />
+                <input type="hidden" asp-for="Payee" />
+                <div class="form-group">
+                    <label asp-for="PayeeID" class="control-label"></label>
+                    <input asp-for="PayeeID" class="form-control" />
+                    <span asp-validation-for="PayeeID" class="text-danger"></span>
+                    @Html.ValidationMessage("PayeeError", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="AccountNumber" class="control-label"></label>
+                    @Html.DropDownList("AccountNumber", (IEnumerable<SelectListItem>)ViewBag.Accounts, null, new { @class = "form-control" })
+                    <span asp-validation-for="AccountNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Amount" class="control-label"></label>
+                    <input asp-for="Amount" class="form-control" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                    @Html.ValidationMessage("AmountError", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="Period" class="control-label"></label>
+                    <label class="control-label">Single, Monthly, Quaterly or Annually</label>
+                    @Html.DropDownList("payPeriod", new SelectList(Enum.GetValues(typeof(PeriodLength))),
+                                                 "--select payment period--", new { @class = "form-control" })
+                    @Html.ValidationMessage("PeriodError", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="ScheduleDate" class="control-label"></label>
+                    <input asp-for="ScheduleDate" class="form-control" />
+                    <span asp-validation-for="ScheduleDate" class="text-danger"></span>
+                    @Html.ValidationMessage("TimeError", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Enter" class="btn btn-primary" />
+                    <hr />
+                    <a asp-action="Index">Back</a>
+                </div>
+            </form>
+        </div>  
+    </div>
+}
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Home Page";
+    var IsUserLoggedIn = Context.Session.GetInt32(nameof(Customer.CustomerID)).HasValue;
+}
+
+<div class="text-center">
+    <h2 class="display-4">Welcome to the National Wealth Bank of Australasia.</h2>
+    @if (!IsUserLoggedIn)
+    {
+        <h3>Please login.</h3>
+    }
+    else
+    {
+        <h3>Welcome @Context.Session.GetString(nameof(Customer.CustomerName)).</h3>
+    }
+</div>

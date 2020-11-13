@@ -1,0 +1,53 @@
+﻿@using WDT2020_a2.Models
+@model List<BillPay>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1 class="display-4">BillPay</h1>
+
+<h3>Upcoming Bills</h3>
+
+<a asp-action="Create">Add New BillPay</a>
+
+@if (ViewData["Error"] != null)
+{
+    <p class="text-danger">@ViewData["Error"]</p>
+}
+
+
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(x => x[0].Payee)</th>
+        <th>@Html.DisplayNameFor(x => x[0].Amount)</th>
+        <th>@Html.DisplayNameFor(x => x[0].ScheduleDate)</th>
+        <th>@Html.DisplayNameFor(x => x[0].Period)</th>
+        <th>@Html.ValidationMessage("CustomError", new { @class = "text-danger" })</th>
+    </tr>
+
+    @foreach (var bill in Model)
+    {
+        @using (Html.BeginForm("Edit", "BillPay", new { id = bill.BillPayID }))
+        {
+            @Html.HiddenFor(x => bill.BillPayID)
+            @Html.HiddenFor(x => bill.AccountNumber)
+            @Html.HiddenFor(x => bill.Account)
+            @Html.HiddenFor(x => bill.ModifyDate)
+            @Html.HiddenFor(x => bill.PayeeID)
+            @Html.HiddenFor(x => bill.Payee)
+            @Html.HiddenFor(x => bill.Period)
+
+            <tr>
+                <td>@Html.DisplayFor(x => bill.Payee.PayeeName)</td>
+                <td>@Html.DisplayFor(x => bill.Amount)</td>
+                <td>@Html.DisplayFor(x => bill.ScheduleDate)</td>
+                <td>@bill.DisplayPeriod()</td>
+                <td>
+                    <a class="btn btn-success" asp-action="Edit" asp-route-id="@bill.BillPayID">Modify</a>
+                    <a class="btn btn-warning" asp-action="Delete" asp-route-id="@bill.BillPayID">Delete</a>
+                </td>
+            </tr>
+        }
+    }
+</table>

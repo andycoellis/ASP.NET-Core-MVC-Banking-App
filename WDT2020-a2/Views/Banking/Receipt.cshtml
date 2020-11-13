@@ -1,0 +1,43 @@
+﻿@model WDT2020_a2.Models.Transaction
+@{
+    ViewData["Title"] = "Transaction Receipt";
+}
+
+<h1 class="display-4">Successful Transaction</h1>
+
+<h3>Transaction Details</h3>
+<table class="table">
+    <tr>
+        <td>@Html.DisplayNameFor(x => x.TransactionID)</td>
+        <td>@Html.DisplayFor(x => x.TransactionID)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(x => x.TransactionType)</td>
+        <td>@Html.DisplayFor(x => x.TransactionType)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(x => x.AccountNumber)</td>
+        <td>@Html.DisplayFor(x => x.AccountNumber)</td>
+    </tr>
+    @if (Model.TransactionType == 'T')
+    {
+        <tr>
+            <td>@Html.DisplayNameFor(x => x.DestAccount)</td>
+            <td>@Html.DisplayFor(x => x.DestAccount)</td>
+        </tr>
+    }
+    <tr>
+        <td>@Html.DisplayNameFor(x => x.Amount)</td>
+        <td>@Html.DisplayFor(x => x.Amount)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(x => x.Comment)</td>
+        <td>@Html.DisplayFor(x => x.Comment)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(x => x.ModifyDate)</td>
+        <td>@Html.DisplayFor(x => x.ModifyDate)</td>
+    </tr>
+</table>
+
+<a asp-controller="Accounts" asp-action="Index">Back to Accounts</a>

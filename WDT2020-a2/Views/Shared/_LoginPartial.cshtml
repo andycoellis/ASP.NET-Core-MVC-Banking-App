@@ -1,0 +1,50 @@
+@using Microsoft.AspNetCore.Http
+
+@{
+    var IsUserLoggedIn = Context.Session.GetInt32(nameof(Customer.CustomerID)).HasValue;
+}
+
+@if (!IsUserLoggedIn)
+{
+    <ul class="navbar-nav flex-end">
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Register" asp-action="Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark nav-links-shadow" asp-controller="Login" asp-action="Login">Login</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
+        </li>
+    </ul>
+}
+else
+{
+    <ul class="navbar-nav flex-end">
+        <li class="nav-item">
+            <a class="nav-link text-dark">@Context.Session.GetString(nameof(Customer.CustomerName))</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark nav-links-shadow" asp-controller="Login" asp-action="Logout">Logout</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+            <a class="nav-link text-dark nav-links-shadow" asp-controller="Home" asp-action="Index">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark nav-links-shadow" asp-controller="Accounts" asp-action="Index">My Accounts</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark nav-links-shadow" asp-controller="Banking" asp-action="ATM">ATM</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark nav-links-shadow" asp-controller="BillPay" asp-action="Index">BillPay</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark nav-links-shadow" asp-controller="Profile" asp-action="Index">My Profile</a>
+        </li>
+    </ul>
+}

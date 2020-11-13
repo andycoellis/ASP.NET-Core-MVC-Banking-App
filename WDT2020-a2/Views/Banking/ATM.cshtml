@@ -1,0 +1,96 @@
+﻿@model WDT2020_a2.Models.Transaction
+@{
+    ViewData["Title"] = "ATM Functions";
+}
+
+<h1>Transaction Details</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ATM">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <div class="form-group">
+                <label asp-for="TransactionType" class="control-label"></label>
+                <div>
+                    <label><input asp-for="TransactionType" value="D" type="radio" />Deposit</label>
+                    <label><input asp-for="TransactionType" value="W" type="radio" />Withdrawal</label>
+                    <label><input asp-for="TransactionType" value="T" type="radio" />Transfer</label>
+                </div>
+                <span asp-validation-for="TransactionType" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="AccountNumber" class="control-label"></label>
+                <select id="AccountNumber" name="AccountNumber">
+                    @foreach (var account in ViewBag.CustAccounts)
+                    {
+                        <option value="@account.AccountNumber">@account.AccountNumber - @account.AccountType - $@account.Balance</option>
+                    }
+                </select>
+                <span asp-validation-for="AccountNumber" class="text-danger"></span>
+            </div>
+
+
+            <div id="dest" class="form-group">
+                <label asp-for="DestAccount" class="control-label"></label>
+                <select id="DestAccount" name="DestAccount">
+                    @foreach (var account in ViewBag.AllAccounts)
+                    {
+                        <option value="@account.AccountNumber">@account.AccountNumber - @account.AccountType</option>
+                    }
+                </select>
+                <span asp-validation-for="DestAccount" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Comment" class="control-label"></label>
+                <input asp-for="Comment" class="form-control" />
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <a asp-controller="Accounts" asp-action="Index" class="btn btn-secondary">Cancel Transaction</a>
+                <input type="submit" value="Execute Transaction" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+
+    <script>
+        // function to hide Destination Account input based on TransactionType selected //
+        // on page load //
+        $(document).ready(function () {
+            if ($("input[name=TransactionType]:checked").val() === 'T') {
+                $("#dest").show();
+            } else {
+                $("#dest").hide();
+            }
+        });
+
+        // on radio button selection //
+        $(":radio").click(function () {
+            if ($(this).val() === 'T') {
+                $("#dest").show();
+            } else {
+                $("#dest").hide();
+            }
+        });
+    </script>
+}

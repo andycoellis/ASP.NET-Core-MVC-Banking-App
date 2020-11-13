@@ -1,0 +1,76 @@
+﻿@model WDT2020_a2.Models.BillPay
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>BillPay</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="BillPay" asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BillPayID" />
+            <input type="hidden" asp-for="ModifyDate" />
+            <input type="hidden" asp-for="Account" />
+            <input type="hidden" asp-for="AccountNumber" />
+            <input type="hidden" asp-for="Payee" />
+            <input type="hidden" asp-for="PayeeID" />
+
+            <div class="form-group">
+                <h2 class="display-4">@Html.DisplayFor(x => x.Payee.PayeeName)</h2>
+                <hr />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Period" class="control-label"></label>
+                <hr />
+                <div>
+                    <div>
+                        <label>Single Instance</label>
+                        <input asp-for="Period" value='S' type="radio" />
+                    </div>
+                    <div>
+                        <label>Monthly</label>
+                        <input asp-for="Period" value='M' type="radio" />
+                    </div>
+                    <div>
+                        <label>Quarterly</label>
+                        <input asp-for="Period" value='Q' type="radio" />
+                    </div>
+
+                    <div>
+                        <label>Annually</label>
+                        <input asp-for="Period" value='A' type="radio" />
+                    </div>
+                </div>
+                <span asp-validation-for="Period" class="text-danger"></span>
+            </div>
+
+
+
+            <div class="form-group">
+                <label asp-for="ScheduleDate" class="control-label"></label>
+                @Html.EditorFor(x => Model.ScheduleDate, new { @class = "form-control" })
+            </div>
+            <div>
+                <input type="submit" value="Save" class="btn btn-warning" />
+                <a asp-action="Index" class="btn btn-primary" />Cancel</a>
+            </div>
+            <div>
+                <a>@Html.ValidationMessage("CustomError", new { @class = "text-danger" })</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

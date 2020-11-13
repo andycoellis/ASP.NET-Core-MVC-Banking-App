@@ -1,0 +1,31 @@
+﻿@model WDT2020_a2.Models.Customer
+@{
+    ViewData["Title"] = "Account Summary";
+}
+
+<h1 class="display-4">Welcome, @Model.CustomerName</h1>
+
+<h3>Account Summary</h3>
+
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(x => x.Accounts[0].AccountNumber)</th>
+        <th>@Html.DisplayNameFor(x => x.Accounts[0].AccountType)</th>
+        <th>@Html.DisplayNameFor(x => x.Accounts[0].Balance)</th>
+        <th>Transaction Statement</th>
+    </tr>
+    @foreach (var account in Model.Accounts)
+    {
+        <tr>
+            <td>@Html.DisplayFor(x => account.AccountNumber)</td>
+            <td>@Html.DisplayFor(x => account.AccountType)</td>
+            <td>@Html.DisplayFor(x => account.Balance)</td>
+
+            <td>
+                <a class="btn btn-primary" asp-action="Statement" asp-route-id="@account.AccountNumber">Statement</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<a asp-controller="Home" asp-action="Index">Back to Home</a>

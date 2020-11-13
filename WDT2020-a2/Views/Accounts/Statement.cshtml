@@ -1,0 +1,53 @@
+﻿@model WDT2020_a2.Models.Transaction
+@{
+    ViewBag.Title = "Transaction Statement";
+}
+@using X.PagedList.Mvc.Core.Common;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+<link rel="stylesheet" href="~/css/PagedList.css" />
+
+<h2>Transactions Statement of Account @ViewBag.ID</h2>
+
+@foreach (Transaction transaction in ViewBag.OnePageOfTransactions)
+{
+    <div class="row">
+        <table class="table">
+            <tr class="row">
+                <th class="col-md-6">@Html.DisplayNameFor(x => x.TransactionID)</th>
+                <th class="col-md-6">@Html.DisplayFor(x => transaction.TransactionID)</th>
+            </tr>
+            <tr class="row">
+                <td class="col-md-6">@Html.DisplayNameFor(x => x.TransactionType)</td>
+                <td class="col-md-6">@Html.DisplayFor(x => transaction.TransactionType)</td>
+            </tr>
+            <tr class="row">
+                <td class="col-md-6">@Html.DisplayNameFor(x => x.AccountNumber)</td>
+                <td class="col-md-6">@Html.DisplayFor(x => transaction.AccountNumber)</td>
+            </tr>
+            @if (transaction.TransactionType == 'T')
+            {
+                <tr class="row">
+                    <td class="col-md-6">@Html.DisplayNameFor(x => x.DestAccount)</td>
+                    <td class="col-md-6">@Html.DisplayFor(x => transaction.DestAccount)</td>
+                </tr>
+            }
+            <tr class="row">
+                <td class="col-md-6">@Html.DisplayNameFor(x => x.Amount)</td>
+                <td class="col-md-6">@Html.DisplayFor(x => transaction.Amount)</td>
+            </tr>
+            <tr class="row">
+                <td class="col-md-6">@Html.DisplayNameFor(x => x.Comment)</td>
+                <td class="col-md-6">@Html.DisplayFor(x => transaction.Comment)</td>
+            </tr>
+            <tr class="row">
+                <td class="col-md-6">@Html.DisplayNameFor(x => x.ModifyDate)</td>
+                <td class="col-md-6">@Html.DisplayFor(x => transaction.ModifyDate)</td>
+            </tr>
+        </table>
+    </div>
+    <br />
+}
+
+@Html.PagedListPager((IPagedList)ViewBag.OnePageOfTransactions, page => Url.Action("Statement", "Accounts", new { ViewBag.ID, page }), PagedListRenderOptions.MinimalWithItemCountText)
